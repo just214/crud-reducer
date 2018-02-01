@@ -1,8 +1,7 @@
 {
   "name": "crud-reducer",
-  "version": "0.0.15",
-  "description":
-    "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
+  "version": "0.0.1",
+  "description": "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/gojutin/crud-reducer.git"
   },
-  "keywords": ["redux", "crud", "crud-redux", "state", "react"],
+  "keywords": [
+    "redux",
+    "crud",
+    "crud-redux",
+    "state",
+    "react"
+  ],
   "author": "@gojutin",
   "license": "MIT",
   "bugs": {
