@@ -1,8 +1,8 @@
 ## crud-reducer
 
-### `npm i crud-reducer`
+### A simple utility library to help you manage CRUD, API or any other async operations with [redux](https://redux.js.org/).
 
-#### A simple utility library to help you manage CRUD, API or any other async operations with [redux](https://redux.js.org/).
+#### `npm i crud-reducer`
 
 Managing crud and other async operations with redux typically requires the following for each request:
 
@@ -16,18 +16,19 @@ This library was designed to help with these common tasks and exposes two simple
 
 ##### `crudAction`
 
+## PLEASE READ
+
 This library assumes that you already have `redux` and `redux-thunk` set up in your project. If not, this library may not be much use to you.
 
-> <h5 style="color: red">PLEASE READ</h5>
-This library has not been exhaustively tested and is not recommended in production apps yet. If you think it is useful and would like to contribute, please feel free :)
+This library has not been exhaustively tested and is not recommended for production use yet. If you think it is useful and would like to contribute, please feel free.
 
 ### Getting started
 
-> **Step 1: Install crud-reducer**
+**Step 1: Install crud-reducer**
 
 `yarn add crud-reducer` or `npm i crud-reducer`
 
-> **Step 2- Create a reducer with the `crudReducer` method in your `combineReducer` function**
+**Step 2- Create a reducer with the `crudReducer` method in your `combineReducer` function**
 
 Each reducer should represent an individual data set that you intend to query or mutate. The `crudReducer` method takes a single argument- the name that you chose for the reducer.
 
@@ -42,7 +43,7 @@ export default combineReducers({
 });
 ```
 
-> **Step 3- Build action creators using the `crudAction` method.**
+**Step 3- Build action creators using the `crudAction` method.**
 
 This methods accept two arguments:
 
@@ -66,7 +67,7 @@ const fetchUsers = () =>
   );
 ```
 
-> **Step 4 (for React apps)- Connect your newly created state and action creators to your components as normal.**
+**Step 4 (for React apps)- Connect your newly created state and action creators to your components as normal.**
 
 ```js
 import { connect } from 'react-redux';
