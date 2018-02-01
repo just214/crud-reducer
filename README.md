@@ -1,10 +1,10 @@
-## crud-reducer
+# crud-reducer
 
 ### A simple utility library to help you manage CRUD, API or any other async operations with [redux](https://redux.js.org/).
 
 #### `npm i crud-reducer`
 
-Managing crud and other async operations with redux typically requires the following for each request:
+Managing CRUD and other async operations with redux typically requires the following for each request:
 
 1. Handling request data
 2. Handling request errors
@@ -16,13 +16,13 @@ This library was designed to help with these common tasks and exposes two simple
 
 ##### `crudAction`
 
-## PLEASE READ
+### PLEASE READ
 
 This library assumes that you already have `redux` and `redux-thunk` set up in your project. If not, this library may not be much use to you.
 
 This library has not been exhaustively tested and is not recommended for production use yet. If you think it is useful and would like to contribute, please feel free.
 
-### Getting started
+### GETTING STARTED
 
 **Step 1: Install crud-reducer**
 
@@ -83,7 +83,7 @@ export default connect(mapStateToProps, { fetchUsers })(UserCardList);
 
 Each reducer created with `crudReducer` will manage and store the data, pending state and errors for each request that is made with any of its corresponding `crudAction` methods. The store will be modeled based on the first string passed into your `crudAction` methods. (reducerName.actionName)
 
-### State Model
+### STATE MODEL
 
 ```js
 reducerName: {
@@ -102,7 +102,7 @@ reducerName: {
 | pending  | Boolean   | `true` during request. `false` on resolve or reject. Stored in the `reducerName.actionName.pending` property. |
 | error    | any       | If your promise rejects, the error will be stored in the `reducerName.actionName.error` property.             |
 
-### Example
+### EXAMPLE
 
 Here is a simple React example that uses the `crudReducer` and `crudAction` defined above to render a list of users returned from the JSONPlaceholder API.
 
