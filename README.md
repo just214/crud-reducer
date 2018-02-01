@@ -88,7 +88,7 @@ Each reducer created with `crudReducer` will manage and store the data, pending 
 ```js
 reducerName: {
   actionName: {
-	data: <any>,
+	  data: <any>,
     pending: Boolean,
     error: <any>,
   },
