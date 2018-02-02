@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -60,26 +64,29 @@ var crudReducer = function crudReducer(name) {
 };
 
 var crudAction = function crudAction(name, promise) {
-  return async function(dispatch) {
+  return function(dispatch) {
     var reducerName = name.split('.')[0].toUpperCase();
     var methodName = name.split('.')[1];
-    try {
-      dispatch({
-        type: reducerName + '_ACTION_PENDING',
-        payload: { methodName: methodName },
+    dispatch({
+      type: reducerName + '_ACTION_PENDING',
+      payload: { methodName: methodName },
+    });
+
+    promise()
+      .then(function(data) {
+        dispatch({
+          type: reducerName + '_ACTION_COMPLETE',
+          payload: { methodName: methodName, data: data.results },
+        });
+      })
+      .catch(function(error) {
+        dispatch({
+          type: reducerName + '_ACTION_ERROR',
+          payload: { methodName: methodName, error: error },
+        });
       });
-      var results = await promise();
-      dispatch({
-        type: reducerName + '_ACTION_COMPLETE',
-        payload: { methodName: methodName, data: results },
-      });
-    } catch (error) {
-      dispatch({
-        type: reducerName + '_ACTION_ERROR',
-        payload: { methodName: methodName, error: error },
-      });
-    }
   };
 };
 
-module.exports = { crudReducer: crudReducer, crudAction: crudAction };
+exports.crudReducer = crudReducer;
+exports.crudAction = crudAction;
