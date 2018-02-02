@@ -1,7 +1,8 @@
 {
   "name": "crud-reducer",
   "version": "0.0.19",
-  "description": "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
+  "description":
+    "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
   "main": "index.js",
   "scripts": {
     "build": "npx webpack main.js index.js",
@@ -11,13 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/gojutin/crud-reducer.git"
   },
-  "keywords": [
-    "redux",
-    "crud",
-    "crud-redux",
-    "state",
-    "react"
-  ],
+  "keywords": ["redux", "crud", "crud-redux", "crud-reducer", "state", "react"],
   "author": "@gojutin",
   "license": "MIT",
   "bugs": {
@@ -25,7 +20,5 @@
   },
   "homepage": "https://github.com/gojutin/crud-reducer#readme",
   "dependencies": {},
-  "devDependencies": {
-    "webpack": "^3.10.0"
-  }
+  "devDependencies": {}
 }
