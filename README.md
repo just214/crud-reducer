@@ -4,7 +4,7 @@
 
 #### `npm i crud-reducer`
 
-Managing CRUD and other async operations with redux typically requires the following for each request:
+Managing async operations with redux typically requires:
 
 1. Handling request data
 2. Handling request errors
@@ -12,9 +12,9 @@ Managing CRUD and other async operations with redux typically requires the follo
 
 This library was designed to help with these common tasks and exposes two simple methods:
 
-##### `crudReducer`
+#### `crudReducer`
 
-##### `crudAction`
+#### `crudAction`
 
 ### PLEASE READ
 
@@ -40,6 +40,7 @@ const users = crudReducer('users');
 
 export default combineReducers({
   users,
+  // or users: crudReducer('users')
 });
 ```
 
@@ -47,9 +48,9 @@ export default combineReducers({
 
 This methods accept two arguments:
 
-    1. String- "reducerName.actionName"
+    1. String: "reducerName.actionName"
 
-    2. A function that returns a promise
+    2. Function: Must return a promise
 
 If you need to modify the data before it is saved to your store, just chain a `.then()` on your promise and return the modified value. You can do anything to the data in the `.then()` as long as it returns a value, which is what is ultimately saved to the store.
 
@@ -81,14 +82,14 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { fetchUsers })(UserCardList);
 ```
 
-Each reducer created with `crudReducer` will manage and store the data, pending state and errors for each request that is made with any of its corresponding `crudAction` methods. The store will be modeled based on the first string passed into your `crudAction` methods. (reducerName.actionName)
-
 ### STATE MODEL
+
+Each reducer created with `crudReducer` will manage and store the data, pending state and error for each request that is made with any of its corresponding `crudAction` methods. The store will be modeled based on the first string passed into your `crudAction` methods. (reducerName.actionName)
 
 ```js
 reducerName: {
   actionName: {
-	  data: <any>,
+	data: <any>,
     pending: Boolean,
     error: <any>,
   },
@@ -96,11 +97,11 @@ reducerName: {
 }
 ```
 
-| property | data type | details                                                                                                       |
-| -------- | --------- | ------------------------------------------------------------------------------------------------------------- |
-| data     | any       | If your promise resolves successfully, the data will be stored in the `reducerName.actionName.data` property. |
-| pending  | Boolean   | `true` during request. `false` on resolve or reject. Stored in the `reducerName.actionName.pending` property. |
-| error    | any       | If your promise rejects, the error will be stored in the `reducerName.actionName.error` property.             |
+| property | data type | details                                                                                                       | action dispatched           |
+| -------- | --------- | ------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| data     | any       | If your promise resolves successfully, the data will be stored in the `reducerName.actionName.data` property. | REDUCERNAME_ACTION_COMPLETE |
+| pending  | Boolean   | `true` during request. `false` on resolve or reject. Stored in the `reducerName.actionName.pending` property. | REDUCERNAME_ACTION_PENDING  |
+| error    | any       | If your promise rejects, the error will be stored in the `reducerName.actionName.error` property.             | REDUCERNAME_ACTION_ERROR    |
 
 ### EXAMPLE
 
@@ -166,3 +167,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { fetchUsers })(UserCard);
 ```
+
+Made with :green_heart: by a vegan
