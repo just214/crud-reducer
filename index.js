@@ -50,7 +50,7 @@ var crudAction = function crudAction(name, promise) {
     promise().then(function (data) {
       dispatch({
         type: reducerName + '_ACTION_COMPLETE',
-        payload: { methodName: methodName, data: data.results }
+        payload: { methodName: methodName, data: data }
       });
     }).catch(function (error) {
       dispatch({

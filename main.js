@@ -44,7 +44,7 @@ const crudAction = (name, promise) => {
       .then(data => {
         dispatch({
           type: `${reducerName}_ACTION_COMPLETE`,
-          payload: { methodName, data: data.results },
+          payload: { methodName, data },
         });
       })
       .catch(error => {
