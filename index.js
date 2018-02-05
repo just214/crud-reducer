@@ -40,22 +40,26 @@ var crudReducer = function crudReducer(name) {
 
 var crudAction = function crudAction(name, promise) {
   return function (dispatch) {
-    var reducerName = name.split('.')[0].toUpperCase();
-    var methodName = name.split('.')[1];
-    dispatch({
-      type: reducerName + '_ACTION_PENDING',
-      payload: { methodName: methodName }
-    });
-
-    promise().then(function (data) {
+    return new Promise(function (resolve, reject) {
+      var reducerName = name.split('.')[0].toUpperCase();
+      var methodName = name.split('.')[1];
       dispatch({
-        type: reducerName + '_ACTION_COMPLETE',
-        payload: { methodName: methodName, data: data }
+        type: reducerName + '_ACTION_PENDING',
+        payload: { methodName: methodName }
       });
-    }).catch(function (error) {
-      dispatch({
-        type: reducerName + '_ACTION_ERROR',
-        payload: { methodName: methodName, error: error }
+
+      promise().then(function (data) {
+        dispatch({
+          type: reducerName + '_ACTION_COMPLETE',
+          payload: { methodName: methodName, data: data }
+        });
+        resolve(data);
+      }).catch(function (error) {
+        dispatch({
+          type: reducerName + '_ACTION_ERROR',
+          payload: { methodName: methodName, error: error }
+        });
+        reject(error);
       });
     });
   };

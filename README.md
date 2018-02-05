@@ -56,6 +56,8 @@ If you need to modify the data before it is saved to your store, just chain a `.
 
 Don't worry about catching the errors. `crud-reducer` will take care of that for you.
 
+The `crudReducer` also returns a promise, which resolves with the data from the request's return and rejects with the error. These values are also available in the store and is usually the more convenient approach. However, this promise can be useful if you want to wait for the request before doing something else in your component.
+
 ```js
 import axios from 'axios';
 import { crudAction } from 'crud-reducer';
@@ -130,7 +132,9 @@ UserCardItem.propTypes = {
 
 class UserCard extends Component {
   componentDidMount() {
-    this.props.fetchUsers();
+    this.props.fetchUsers().then(data => {
+      // the crudReducer returns a promise just in case you need it.
+    });
   }
   render() {
     const { users } = this.props;

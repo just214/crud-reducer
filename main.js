@@ -33,26 +33,30 @@ const crudReducer = name => (state = {}, action) => {
 
 const crudAction = (name, promise) => {
   return dispatch => {
-    const reducerName = name.split('.')[0].toUpperCase();
-    const methodName = name.split('.')[1];
-    dispatch({
-      type: `${reducerName}_ACTION_PENDING`,
-      payload: { methodName },
-    });
-
-    promise()
-      .then(data => {
-        dispatch({
-          type: `${reducerName}_ACTION_COMPLETE`,
-          payload: { methodName, data },
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: `${reducerName}_ACTION_ERROR`,
-          payload: { methodName, error },
-        });
+    return new Promise((resolve, reject) => {
+      const reducerName = name.split('.')[0].toUpperCase();
+      const methodName = name.split('.')[1];
+      dispatch({
+        type: `${reducerName}_ACTION_PENDING`,
+        payload: { methodName },
       });
+
+      promise()
+        .then(data => {
+          dispatch({
+            type: `${reducerName}_ACTION_COMPLETE`,
+            payload: { methodName, data },
+          });
+          resolve(data);
+        })
+        .catch(error => {
+          dispatch({
+            type: `${reducerName}_ACTION_ERROR`,
+            payload: { methodName, error },
+          });
+          reject(error);
+        });
+    });
   };
 };
 
