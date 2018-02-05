@@ -56,8 +56,6 @@ If you need to modify the data before it is saved to your store, just chain a `.
 
 Don't worry about catching the errors. `crud-reducer` will take care of that for you.
 
-The `crudReducer` also returns a promise, which resolves with the data from the request's return and rejects with the error. These values are also available in the store and is usually the more convenient approach. However, this promise can be useful if you want to wait for the request before doing something else in your component.
-
 ```js
 import axios from 'axios';
 import { crudAction } from 'crud-reducer';
@@ -83,6 +81,43 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { fetchUsers })(UserCardList);
 ```
+
+### More about crudAction
+
+##### Subscriptions
+
+The `crudAction` method accepts a `next` argument that can be useful for sockets and subscriptions. The `next` function allows you to pass the final result of a re-occurring operation, which will update the store each time.
+
+A couple things about the `next` function:
+
+1. The name `next` is completely arbitrary and can be any name you would like. When you place a name as an argument, this tells the `crudReducer` that you intend to manually provide the value via the a function that it provides.
+2. The `next` function is not able to track pending or error state as you are handling the async process outside of the method and providing the final return value.
+3. Do not provide an argument name if you do not intend to use it as this will likely not give you the intended results.
+
+In this example, we are calling the `next` function with the results of a Firebase Realtime Database listener. Each time the db ref value changes (via the `.on` method), the store will be updated automatically.
+
+```js
+const subscribeToUser = id =>
+  crudAction('user.subscription', next => {
+    return db.ref(`user/${id}`).on('value', next => {
+      next(snap.val());
+    });
+  });
+```
+
+And the corresponding data model:
+
+```js
+user {
+  subscription: {
+    data: <any>
+  }
+}
+```
+
+##### Returns a Promise
+
+Any action creator created with a `crudAction` method returns a promise, which resolves with the data from the request or rejects with the error. These values (data, error, and pending) are also available in the store and accessing them through the `connect` HOC is usually the more convenient approach. However, this promise can be useful if you want to wait for the request before doing something else in your component.
 
 ### STATE MODEL
 

@@ -31,31 +31,42 @@ const crudReducer = name => (state = {}, action) => {
   }
 };
 
-const crudAction = (name, promise) => {
+const crudAction = (name, callback) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       const reducerName = name.split('.')[0].toUpperCase();
       const methodName = name.split('.')[1];
+
       dispatch({
         type: `${reducerName}_ACTION_PENDING`,
         payload: { methodName },
       });
 
-      promise()
-        .then(data => {
+      if (callback.length) {
+        const saveData = data => {
           dispatch({
             type: `${reducerName}_ACTION_COMPLETE`,
             payload: { methodName, data },
           });
-          resolve(data);
-        })
-        .catch(error => {
-          dispatch({
-            type: `${reducerName}_ACTION_ERROR`,
-            payload: { methodName, error },
+        };
+        callback(saveData);
+      } else {
+        callback()
+          .then(data => {
+            dispatch({
+              type: `${reducerName}_ACTION_COMPLETE`,
+              payload: { methodName, data },
+            });
+            resolve(data);
+          })
+          .catch(error => {
+            dispatch({
+              type: `${reducerName}_ACTION_ERROR`,
+              payload: { methodName, error },
+            });
+            reject(error);
           });
-          reject(error);
-        });
+      }
     });
   };
 };

@@ -38,29 +38,40 @@ var crudReducer = function crudReducer(name) {
   };
 };
 
-var crudAction = function crudAction(name, promise) {
+var crudAction = function crudAction(name, callback) {
   return function (dispatch) {
     return new Promise(function (resolve, reject) {
       var reducerName = name.split('.')[0].toUpperCase();
       var methodName = name.split('.')[1];
+
       dispatch({
         type: reducerName + '_ACTION_PENDING',
         payload: { methodName: methodName }
       });
 
-      promise().then(function (data) {
-        dispatch({
-          type: reducerName + '_ACTION_COMPLETE',
-          payload: { methodName: methodName, data: data }
+      if (callback.length) {
+        var saveData = function saveData(data) {
+          dispatch({
+            type: reducerName + '_ACTION_COMPLETE',
+            payload: { methodName: methodName, data: data }
+          });
+        };
+        callback(saveData);
+      } else {
+        callback().then(function (data) {
+          dispatch({
+            type: reducerName + '_ACTION_COMPLETE',
+            payload: { methodName: methodName, data: data }
+          });
+          resolve(data);
+        }).catch(function (error) {
+          dispatch({
+            type: reducerName + '_ACTION_ERROR',
+            payload: { methodName: methodName, error: error }
+          });
+          reject(error);
         });
-        resolve(data);
-      }).catch(function (error) {
-        dispatch({
-          type: reducerName + '_ACTION_ERROR',
-          payload: { methodName: methodName, error: error }
-        });
-        reject(error);
-      });
+      }
     });
   };
 };
