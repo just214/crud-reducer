@@ -1,23 +1,17 @@
 {
   "name": "crud-reducer",
   "version": "0.1.5",
-  "description": "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
+  "description":
+    "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
   "main": "index.js",
   "scripts": {
-    "build": "babel --presets es2015 main.js -o index.js"
+    "build": "BABEL_ENV=production babel --presets es2015 main.js -o index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gojutin/crud-reducer.git"
   },
-  "keywords": [
-    "redux",
-    "crud",
-    "crud-redux",
-    "crud-reducer",
-    "state",
-    "react"
-  ],
+  "keywords": ["redux", "crud", "crud-redux", "crud-reducer", "state", "react"],
   "author": "@gojutin",
   "license": "MIT",
   "bugs": {
@@ -29,6 +23,10 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-minify": "^0.3.0",
+    "babel-minify-webpack-plugin": "^0.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-minify": "^0.3.0",
+    "webpack": "^3.10.0"
   }
 }

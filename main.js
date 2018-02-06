@@ -48,7 +48,7 @@ const crudAction = (name, callback) => {
             type: `${reducerName}_ACTION_COMPLETE`,
             payload: { methodName, data },
           });
-          resolve(data);
+          resolve({ dispatch, data });
         };
         callback(saveData);
       } else {
@@ -58,14 +58,14 @@ const crudAction = (name, callback) => {
               type: `${reducerName}_ACTION_COMPLETE`,
               payload: { methodName, data },
             });
-            resolve(data);
+            resolve({ dispatch, data });
           })
           .catch(error => {
             dispatch({
               type: `${reducerName}_ACTION_ERROR`,
               payload: { methodName, error },
             });
-            reject(error);
+            reject({ dispatch, error });
           });
       }
     });
