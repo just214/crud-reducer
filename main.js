@@ -48,6 +48,7 @@ const crudAction = (name, callback) => {
             type: `${reducerName}_ACTION_COMPLETE`,
             payload: { methodName, data },
           });
+          resolve(data);
         };
         callback(saveData);
       } else {

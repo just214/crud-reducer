@@ -55,6 +55,7 @@ var crudAction = function crudAction(name, callback) {
             type: reducerName + '_ACTION_COMPLETE',
             payload: { methodName: methodName, data: data }
           });
+          resolve(data);
         };
         callback(saveData);
       } else {
