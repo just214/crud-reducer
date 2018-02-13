@@ -1,8 +1,7 @@
 {
   "name": "crud-reducer",
-  "version": "0.1.5",
-  "description":
-    "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
+  "version": "0.1.6",
+  "description": "A simple utility library to help you manage CRUD, API or any other async operations with redux.",
   "main": "index.js",
   "scripts": {
     "build": "BABEL_ENV=production babel --presets es2015 main.js -o index.js"
@@ -11,7 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/gojutin/crud-reducer.git"
   },
-  "keywords": ["redux", "crud", "crud-redux", "crud-reducer", "state", "react"],
+  "keywords": [
+    "redux",
+    "crud",
+    "crud-redux",
+    "crud-reducer",
+    "state",
+    "react"
+  ],
   "author": "@gojutin",
   "license": "MIT",
   "bugs": {
