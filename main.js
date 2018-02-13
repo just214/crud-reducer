@@ -1,26 +1,30 @@
 const crudReducer = name => (state = {}, action) => {
-  const reducerName = name.toUpperCase();
-  const methodName = action.payload && action.payload.methodName;
+  const actionName = action.payload && action.payload.actionName;
+
+  const reducerName = action.payload
+    ? `${name.toUpperCase()}.${action.payload.actionName.toUpperCase()}`
+    : name.toUpperCase();
+
   switch (action.type) {
-    case `${reducerName}_ACTION_PENDING`:
+    case `${reducerName}_PENDING`:
       return Object.assign({}, state, {
-        [`${methodName}`]: {
+        [`${actionName}`]: {
           pending: true,
           data: null,
           error: null,
         },
       });
-    case `${reducerName}_ACTION_COMPLETE`:
+    case `${reducerName}_COMPLETE`:
       return Object.assign({}, state, {
-        [`${methodName}`]: {
+        [`${actionName}`]: {
           pending: false,
           data: action.payload.data,
           error: null,
         },
       });
-    case `${reducerName}_ACTION_ERROR`:
+    case `${reducerName}_ERROR`:
       return Object.assign({}, state, {
-        [`${methodName}`]: {
+        [`${actionName}`]: {
           pending: false,
           data: state.data,
           error: action.payload.error,
@@ -34,19 +38,19 @@ const crudReducer = name => (state = {}, action) => {
 const crudAction = (name, callback) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      const reducerName = name.split('.')[0].toUpperCase();
-      const methodName = name.split('.')[1];
+      const reducerName = name.toUpperCase();
+      const actionName = name.split('.')[1];
 
       dispatch({
-        type: `${reducerName}_ACTION_PENDING`,
-        payload: { methodName },
+        type: `${reducerName}_PENDING`,
+        payload: { actionName },
       });
 
       if (callback.length) {
         const saveData = data => {
           dispatch({
-            type: `${reducerName}_ACTION_COMPLETE`,
-            payload: { methodName, data },
+            type: `${reducerName}_COMPLETE`,
+            payload: { actionName, data },
           });
           resolve({ dispatch, data });
         };
@@ -55,15 +59,15 @@ const crudAction = (name, callback) => {
         callback()
           .then(data => {
             dispatch({
-              type: `${reducerName}_ACTION_COMPLETE`,
-              payload: { methodName, data },
+              type: `${reducerName}_COMPLETE`,
+              payload: { actionName, data },
             });
             resolve({ dispatch, data });
           })
           .catch(error => {
             dispatch({
-              type: `${reducerName}_ACTION_ERROR`,
-              payload: { methodName, error },
+              type: `${reducerName}_ERROR`,
+              payload: { actionName, error },
             });
             reject({ dispatch, error });
           });

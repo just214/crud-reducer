@@ -102,11 +102,11 @@ The initial state represents the state at the time the corresponding `crudAction
 
 The action types are dynamically created based on the reducer name that is passed into the `crudReducer` method. The `pending` action type will always be dispatched followed by either the `data` or `error` action type.
 
-| Property      | Data Type | During Request | On resolve | On reject | Reducer model                    | Action type                   |
-| ------------- | --------- | -------------- | ---------- | --------- | -------------------------------- | ----------------------------- |
-| **`pending`** | `Boolean` | `true`         | `false`    | `false`   | `reducerName.actionName.pending` | `REDUCERNAME_ACTION_PENDING`  |
-| **`data`**    | `<any>`   | `null`         | `<any>`    | `null`    | `reducerName.actionName.data`    | `REDUCERNAME_ACTION_COMPLETE` |
-| **`error`**   | `<any>`   | `null`         | `null`     | `<any>`   | `reducerName.actionName.error`   | `REDUCERNAME_ACTION_ERROR`    |
+| Property      | Data Type | During Request | On resolve | On reject | Reducer model                    | Action type                       |
+| ------------- | --------- | -------------- | ---------- | --------- | -------------------------------- | --------------------------------- |
+| **`pending`** | `Boolean` | `true`         | `false`    | `false`   | `reducerName.actionName.pending` | `REDUCERNAME.ACTIONNAME_PENDING`  |
+| **`data`**    | `<any>`   | `null`         | `<any>`    | `null`    | `reducerName.actionName.data`    | `REDUCERNAME.ACTIONNAME_COMPLETE` |
+| **`error`**   | `<any>`   | `null`         | `null`     | `<any>`   | `reducerName.actionName.error`   | `REDUCERNAME.ACTIONNAME_ERROR`    |
 
 ### More about crudAction
 
